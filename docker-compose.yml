@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: task3-db
+    environment:
+      POSTGRES_DB: supply_db
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5433:5432"
+    volumes:
+      - task3-db-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: task3-app
+    depends_on:
+      - db
+    environment:
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/supply_db
+    ports:
+      - "8080:8080"
+
+volumes:
+  task3-db-data:

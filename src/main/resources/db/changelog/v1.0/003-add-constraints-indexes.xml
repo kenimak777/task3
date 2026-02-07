@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="003-add-zack-avr-constraints" author="zack_avr">
+        <addForeignKeyConstraint
+                baseTableName="price"
+                baseColumnNames="supplier_id"
+                referencedTableName="supplier"
+                referencedColumnNames="id"
+                constraintName="fk_zack_avr_price_supplier"/>
+
+        <addForeignKeyConstraint
+                baseTableName="price"
+                baseColumnNames="product_id"
+                referencedTableName="product"
+                referencedColumnNames="id"
+                constraintName="fk_zack_avr_price_product"/>
+
+        <addForeignKeyConstraint
+                baseTableName="supply"
+                baseColumnNames="supplier_id"
+                referencedTableName="supplier"
+                referencedColumnNames="id"
+                constraintName="fk_zack_avr_supply_supplier"/>
+
+        <addForeignKeyConstraint
+                baseTableName="supply_item"
+                baseColumnNames="supply_id"
+                referencedTableName="supply"
+                referencedColumnNames="id"
+                constraintName="fk_zack_avr_supply_item_supply"/>
+
+        <addForeignKeyConstraint
+                baseTableName="supply_item"
+                baseColumnNames="product_id"
+                referencedTableName="product"
+                referencedColumnNames="id"
+                constraintName="fk_zack_avr_supply_item_product"/>
+
+        <addUniqueConstraint tableName="price"
+                             columnNames="supplier_id,product_id,date_from,date_to"
+                             constraintName="uk_zack_avr_price_period"/>
+
+        <createIndex tableName="supply" indexName="idx_zack_avr_supply_date">
+            <column name="supply_date"/>
+        </createIndex>
+
+        <createIndex tableName="supply" indexName="idx_zack_avr_supply_supplier">
+            <column name="supplier_id"/>
+        </createIndex>
+
+        <createIndex tableName="supply_item" indexName="idx_zack_avr_supply_item_supply">
+            <column name="supply_id"/>
+        </createIndex>
+
+        <createIndex tableName="supply_item" indexName="idx_zack_avr_supply_item_product">
+            <column name="product_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

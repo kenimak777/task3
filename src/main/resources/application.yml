@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: task3
+  datasource:
+    url: jdbc:postgresql://localhost:5432/supply_db
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/changelog-master.xml
+
+logging:
+  level:
+    liquibase: DEBUG
+    org.springframework.liquibase: DEBUG
